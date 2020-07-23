@@ -1,0 +1,51 @@
+<head>
+    <title>OS2FA Auth</title>
+
+    <style>
+        body{
+            background-color: gray;
+        }
+
+        .center{
+            margin-top: 50%;
+            text-align: center;
+        }
+
+        .white{
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="center white" style="font-size: 100px; height: min-content;">OS-2FA Auth Screen</h1>
+    <h1 id="key" class="center" 
+    style="background-color: rgb(51, 51, 51); 
+    color:white; font-size: 100px;"></h1>
+</body>
+
+<script>
+    function updateKeyBox(key) {
+        document.getElementById("key").innerHTML = key;
+    }
+
+    function postKeyBox(message) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            updateKeyBox(this.responseText);
+        }
+        };
+        xhttp.open("POST", "postFromWebpage", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send(message);
+    }
+
+
+    var token=window.location.href.split("/")[4]
+
+    postKeyBox(token + "/getkey");
+    setInterval(function() {
+        postKeyBox(token + "/getkey");
+    }, 10000)
+</script>
