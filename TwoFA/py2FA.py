@@ -16,7 +16,7 @@ class OsTwoFa:
         import os
         try:
             os.remove("active.key")
-            os.renove("token.tk")
+            os.remove("token.tk")
         except FileNotFoundError:
             pass
 
@@ -32,7 +32,7 @@ class OsTwoFa:
             return
 
         with open("active.key") as f:
-            if key == f.read():
+            if str(key) == f.read():
                 return True
             else:
                 return False
